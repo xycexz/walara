@@ -632,3 +632,14 @@ app = application
 
 if __name__ == '__main__':
     flask_app_wrapper.run(debug=True)
+
+    # ============= MAIN APPLICATION INSTANCE =============
+flask_app_wrapper = FlaskAppWrapper(__name__)
+
+# For Vercel deployment - expose the WSGI app
+application = flask_app_wrapper.get_wsgi_app()
+app = application  # Also expose as 'app' for compatibility
+
+# ============= RUN THE APPLICATION =============
+if __name__ == '__main__':
+    flask_app_wrapper.run(debug=True)

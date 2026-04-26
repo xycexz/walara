@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discount Management | User Dashboard</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 260px;
+        background: rgba(30, 30, 47, 0.95);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 25px 20px;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 24px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #fff, #a8c0ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        color: #e0e0e0;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar a:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        transform: translateX(5px);
+      }
+
+      .sidebar a.active {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      /* Main Content */
+      .main {
+        flex: 1;
+        padding: 30px 40px;
+        overflow-y: auto;
+      }
+
+      /* Header */
+      .header {
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 32px;
+        color: white;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .header p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+      }
+
+      /* Stats Bar */
+      .stats-bar {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .stat-chip {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 12px 24px;
+        border-radius: 30px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .stat-chip span:first-child {
+        font-size: 24px;
+      }
+
+      .stat-chip .stat-number {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      /* Cards */
+      .card {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .card-header i {
+        font-size: 28px;
+        color: #667eea;
+      }
+
+      .card-header h3 {
+        font-size: 20px;
+        color: #333;
+      }
+
+      .card-header .badge {
+        margin-left: auto;
+        background: #27ae60;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+      }
+
+      .info-note {
+        background: #e8f0fe;
+        padding: 12px 16px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: #667eea;
+      }
+
+      /* Search Bar */
+      .search-container {
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+      }
+
+      .search-field {
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .search-field label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #555;
+        font-size: 14px;
+      }
+
+      .search-field input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .search-field input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .btn-clear {
+        background: #e0e0e0;
+        color: #555;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-clear:hover {
+        background: #c0c0c0;
+        transform: translateY(-2px);
+      }
+
+      /* Table Styles */
+      .table-container {
+        overflow-x: auto;
+        border-radius: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        padding: 14px 12px;
+        text-align: left;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      th {
+        background: #f8f9fa;
+        color: #555;
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      td {
+        font-size: 14px;
+        color: #333;
+      }
+
+      tbody tr {
+        transition: background 0.2s;
+      }
+
+      tbody tr:hover {
+        background: #f8f9fa;
+      }
+
+      /* Product Styles */
+      .product-id {
+        font-weight: 600;
+        color: #667eea;
+      }
+
+      .discount-badge {
+        background: #ff6b6b;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 20px;
+        font-size: 11px;
+        margin-left: 8px;
+        display: inline-block;
+      }
+
+      .original-price {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 13px;
+      }
+
+      .discounted-price {
+        font-weight: 700;
+        color: #27ae60;
+        font-size: 18px;
+      }
+
+      .discount-percent {
+        background: #27ae60;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        display: inline-block;
+        font-weight: 600;
+      }
+
+      /* Status Badges */
+      .status-active {
+        background: #d4edda;
+        color: #155724;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+      }
+
+      /* Countdown */
+      .countdown-box {
+        background: #f0f0f0;
+        padding: 8px 12px;
+        border-radius: 12px;
+        display: inline-block;
+        min-width: 140px;
+        text-align: center;
+      }
+
+      .countdown-label {
+        font-size: 10px;
+        color: #666;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .countdown-timer {
+        font-size: 13px;
+        font-family: monospace;
+        font-weight: 600;
+        color: #333;
+      }
+
+      /* Empty State */
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+      }
+
+      /* Toast Notification */
+      .toast-notification {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #27ae60;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 12px;
+        display: none;
+        animation: slideIn 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 200px;
+        }
+        .main {
+          padding: 20px;
+        }
+        .search-container {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .btn-clear {
+          width: 100%;
+        }
+        th, td {
+          padding: 10px 8px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <h2>👤 User</h2>
+
+      <a href="{{ url_for('userdashboard') }}">📊 Dashboard</a>
+      <a href="{{ url_for('userdashboard_section', section='pricing') }}">💰 Pricing Management</a>
+      <a href="{{ url_for('userdashboard_section', section='discount') }}" class="active">🏷️ Discount Management</a>
+      <a href="{{ url_for('userdashboard_section', section='settings') }}">⚙️ Settings</a>
+      <a href="{{ url_for('logout') }}">🚪 Logout</a>
+    </div>
+
+    <div class="main">
+      <div class="header">
+        <h1>🏷️ Discount Management</h1>
+        <p>View all active discounts and special offers</p>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-chip">
+          <span>🏷️</span>
+          <span>Active Discounts: <span class="stat-number" id="activeCount">0</span></span>
+        </div>
+        <div class="stat-chip">
+          <span>💰</span>
+          <span>You Save Up To: <span class="stat-number" id="maxDiscount">0%</span></span>
+        </div>
+        <div class="stat-chip">
+          <span>📦</span>
+          <span>Products on Sale: <span class="stat-number" id="productsOnSale">0</span></span>
+        </div>
+      </div>
+
+      <!-- Search Card -->
+      <div class="card">
+        <div class="card-header">
+          🔍
+          <h3>Search Discounts</h3>
+          <div class="badge">Filter</div>
+        </div>
+        
+        <div class="info-note">
+          💡 <strong>Note:</strong> Only active discounts are shown here. Expired or not yet started discounts will not appear.
+        </div>
+
+        <div class="search-container">
+          <div class="search-field">
+            <label>🔎 Search by Product ID</label>
+            <input type="text" id="searchProductId" placeholder="Enter product ID..." />
+          </div>
+          <button type="button" id="clearSearchBtn" class="btn-clear">🧹 Clear Search</button>
+        </div>
+      </div>
+
+      <!-- Discounts List Card -->
+      <div class="card">
+        <div class="card-header">
+          🎯
+          <h3>Active Discounts</h3>
+          <div class="badge" id="discountCount">0 items</div>
+        </div>
+        
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 20%;">Product</th>
+                <th style="width: 20%;">Original Price</th>
+                <th style="width: 15%;">Discount</th>
+                <th style="width: 20%;">Your Price</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 15%;">Countdown</th>
+              </tr>
+            </thead>
+            <tbody id="discountTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">📭 Loading discounts...</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-notification" id="toastNotification">
+      <span id="toastMessage"></span>
+    </div>
+
+    <script>
+      const productStorageKey = "pricing_products";
+      const discountStorageKey = "pricing_discounts";
+      const discountTableBody = document.getElementById("discountTableBody");
+      const searchProductIdInput = document.getElementById("searchProductId");
+      const clearSearchBtn = document.getElementById("clearSearchBtn");
+      
+      let countdownInterval = null;
+
+      function showToast(message, type) {
+        const toast = document.getElementById('toastNotification');
+        const toastMsg = document.getElementById('toastMessage');
+        toastMsg.textContent = message;
+        toast.style.background = type === 'success' ? '#27ae60' : '#667eea';
+        toast.style.display = 'block';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 3000);
+      }
+
+      function getProducts() {
+        const savedProducts = localStorage.getItem(productStorageKey);
+        return savedProducts ? JSON.parse(savedProducts) : [];
+      }
+
+      function getDiscounts() {
+        const savedDiscounts = localStorage.getItem(discountStorageKey);
+        return savedDiscounts ? JSON.parse(savedDiscounts) : [];
+      }
+
+      function formatPrice(price) {
+        return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(price);
+      }
+
+      function checkDiscountStatus(startDate, endDate) {
+        const now = new Date();
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        if (now >= start && now <= end) {
+          return "active";
+        } else if (now < start) {
+          return "not_started";
+        } else {
+          return "expired";
+        }
+      }
+
+      function getCountdown(startDate, endDate, status) {
+        const now = new Date();
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        if (status === "not_started") {
+          const timeDiff = start - now;
+          if (timeDiff > 0) {
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            return { type: "starts_in", days, hours, minutes, seconds };
+          }
+        } else if (status === "active") {
+          const timeDiff = end - now;
+          if (timeDiff > 0) {
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            return { type: "ends_in", days, hours, minutes, seconds };
+          }
+        }
+        return null;
+      }
+
+      function getActiveDiscounts() {
+        const products = getProducts();
+        const discounts = getDiscounts();
+        const productMap = {};
+
+        products.forEach((product) => {
+          productMap[String(product.id)] = product;
+        });
+
+        const activeDiscounts = [];
+
+        discounts.forEach((discount) => {
+          const product = productMap[String(discount.product_id)];
+          if (!product) return;
+          
+          const status = checkDiscountStatus(discount.start_date, discount.end_date);
+          
+          // Only show active discounts to users
+          if (status === "active") {
+            const basePrice = Number(product.base_price);
+            const percent = Number(discount.discount_percent);
+            const discountedPrice = basePrice - (basePrice * percent) / 100;
+            
+            activeDiscounts.push({
+              product_id: discount.product_id,
+              base_price: basePrice,
+              discount_percent: percent,
+              discounted_price: discountedPrice < 0 ? 0 : discountedPrice,
+              start_date: discount.start_date,
+              end_date: discount.end_date,
+              status: status
+            });
+          }
+        });
+        
+        return activeDiscounts;
+      }
+
+      function updateStats(activeDiscounts) {
+        const count = activeDiscounts.length;
+        const maxDiscount = activeDiscounts.length > 0 
+          ? Math.max(...activeDiscounts.map(d => d.discount_percent))
+          : 0;
+        
+        document.getElementById('activeCount').innerText = count;
+        document.getElementById('maxDiscount').innerHTML = `${maxDiscount}%`;
+        document.getElementById('productsOnSale').innerText = count;
+        document.getElementById('discountCount').innerHTML = count + ' item' + (count !== 1 ? 's' : '');
+      }
+
+      function renderDiscounts(filterId = "") {
+        let activeDiscounts = getActiveDiscounts();
+        
+        // Update stats
+        updateStats(activeDiscounts);
+        
+        // Apply filter
+        if (filterId) {
+          activeDiscounts = activeDiscounts.filter(item =>
+            String(item.product_id).toLowerCase().includes(filterId.toLowerCase())
+          );
+        }
+
+        discountTableBody.innerHTML = "";
+
+        if (activeDiscounts.length === 0) {
+          discountTableBody.innerHTML = `
+            <tr>
+              <td colspan="6" class="empty-state">
+                ${filterId ? '🔍 No matching active discounts found.' : '🎉 No active discounts available at the moment. Check back later!'}
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        activeDiscounts.forEach((item) => {
+          const countdown = getCountdown(item.start_date, item.end_date, item.status);
+          
+          let countdownHtml = '';
+          if (countdown) {
+            countdownHtml = `
+              <div class="countdown-box" id="countdown-${item.product_id}">
+                <span class="countdown-label">⏰ ${countdown.type === 'starts_in' ? 'STARTS IN' : 'ENDS IN'}</span>
+                <span class="countdown-timer">${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s</span>
+              </div>
+            `;
+          } else {
+            countdownHtml = `
+              <div class="countdown-box">
+                <span class="countdown-label">⏱️ STATUS</span>
+                <span class="countdown-timer">Ending soon</span>
+              </div>
+            `;
+          }
+          
+          const savings = item.base_price - item.discounted_price;
+          
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>
+              <span class="product-id">#${escapeHtml(item.product_id)}</span>
+              <span class="discount-badge">-${item.discount_percent}%</span>
+            </td>
+            <td>
+              <span class="original-price">${formatPrice(item.base_price)}</span>
+            </td>
+            <td>
+              <span class="discount-percent">${item.discount_percent.toFixed(0)}% OFF</span>
+            </td>
+            <td>
+              <span class="discounted-price">${formatPrice(item.discounted_price)}</span>
+              <div style="font-size: 11px; color: #27ae60;">You save ${formatPrice(savings)}</div>
+            </td>
+            <td>
+              <span class="status-active">● Active</span>
+            </td>
+            <td>
+              ${countdownHtml}
+            </td>
+          `;
+          discountTableBody.appendChild(row);
+        });
+      }
+
+      function updateAllCountdowns() {
+        const activeDiscounts = getActiveDiscounts();
+        activeDiscounts.forEach((item) => {
+          const countdownElement = document.getElementById(`countdown-${item.product_id}`);
+          if (countdownElement) {
+            const countdown = getCountdown(item.start_date, item.end_date, item.status);
+            if (countdown) {
+              countdownElement.innerHTML = `
+                <span class="countdown-label">⏰ ${countdown.type === 'starts_in' ? 'STARTS IN' : 'ENDS IN'}</span>
+                <span class="countdown-timer">${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s</span>
+              `;
+            }
+          }
+        });
+      }
+
+      function startCountdownUpdater() {
+        if (countdownInterval) clearInterval(countdownInterval);
+        countdownInterval = setInterval(() => {
+          updateAllCountdowns();
+          // Re-render to check if any discount expired or new ones started
+          const currentFilter = searchProductIdInput.value.trim();
+          renderDiscounts(currentFilter);
+        }, 1000);
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Search functionality
+      searchProductIdInput.addEventListener("input", function () {
+        const searchTerm = this.value.trim();
+        renderDiscounts(searchTerm);
+        if (searchTerm) {
+          showToast(`Searching for "${searchTerm}"...`, 'success');
+        }
+      });
+
+      clearSearchBtn.addEventListener("click", function () {
+        searchProductIdInput.value = "";
+        renderDiscounts();
+        showToast("Search cleared. Showing all active discounts.", 'success');
+      });
+
+      // Initial render
+      renderDiscounts();
+      startCountdownUpdater();
+      
+      // Auto-refresh every 30 seconds
+      setInterval(() => {
+        const currentFilter = searchProductIdInput.value.trim();
+        renderDiscounts(currentFilter);
+      }, 30000);
+    </script>
+  </body>
+</html>

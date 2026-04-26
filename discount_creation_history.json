@@ -1,0 +1,14 @@
+[
+    {
+        "id": "20260424213215013182",
+        "action": "created",
+        "product_id": "P0002",
+        "discount_percent": 30,
+        "start_date": "2026-04-24T21:32",
+        "end_date": "2026-05-06T21:32",
+        "timestamp": "2026-04-24T21:32:15.013235",
+        "date": "2026-04-24",
+        "time": "21:32:15",
+        "admin": "gwapo@bisu.edu.ph"
+    }
+]

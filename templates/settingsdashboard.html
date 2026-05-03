@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Settings | Account Management</title>
+    <title>User Settings | Profile</title>
 
     <style>
       * {
@@ -104,18 +104,12 @@
         gap: 10px;
       }
 
-      /* Settings Container */
-      .settings-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 25px;
-      }
-
-      /* Settings Card */
+      /* Settings Card - Full Width */
       .settings-card {
         background: white;
         border-radius: 20px;
-        padding: 25px;
+        padding: 30px;
+        width: 100%;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
@@ -129,7 +123,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         padding-bottom: 15px;
         border-bottom: 2px solid #f0f0f0;
       }
@@ -139,110 +133,64 @@
       }
 
       .card-header h3 {
-        font-size: 20px;
+        font-size: 22px;
         color: #333;
       }
 
       .card-header .badge {
         margin-left: auto;
-        background: #ff6b6b;
+        background: #27ae60;
         color: white;
         padding: 4px 12px;
         border-radius: 20px;
-        font-size: 11px;
+        font-size: 12px;
       }
 
       /* Profile Avatar */
       .profile-avatar {
         display: flex;
         align-items: center;
-        gap: 20px;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
+        gap: 25px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
         border-bottom: 1px solid #f0f0f0;
       }
 
       .avatar-circle {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
         background: #ff6b6b;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 32px;
+        font-size: 36px;
+        font-weight: bold;
         color: white;
       }
 
       .avatar-info h4 {
         color: #333;
         margin-bottom: 5px;
+        font-size: 18px;
       }
 
       .avatar-info p {
         color: #666;
-        font-size: 12px;
-      }
-
-      /* Form Styles */
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        color: #555;
-        font-size: 14px;
-      }
-
-      .form-group input,
-      .form-group select {
-        width: 100%;
-        padding: 12px 15px;
-        border: 1px solid #e0e0e0;
-        border-radius: 12px;
-        font-size: 14px;
-        transition: all 0.3s ease;
-      }
-
-      .form-group input:focus,
-      .form-group select:focus {
-        outline: none;
-        border-color: #ff6b6b;
-        box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        font-size: 13px;
       }
 
       /* Button Styles */
-      .btn-primary {
-        background: #ff6b6b;
-        color: white;
-        border: none;
-        padding: 12px 25px;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        width: 100%;
-      }
-
-      .btn-primary:hover {
-        background: #ee5a24;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
-      }
-
       .btn-outline {
         background: transparent;
         border: 1px solid #ff6b6b;
         color: #ff6b6b;
-        padding: 8px 16px;
-        border-radius: 10px;
+        padding: 6px 14px;
+        border-radius: 8px;
         cursor: pointer;
-        font-size: 13px;
+        font-size: 12px;
         transition: all 0.3s ease;
+        margin-top: 8px;
       }
 
       .btn-outline:hover {
@@ -250,21 +198,12 @@
         color: white;
       }
 
-      .btn-icon {
-        background: none;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-        padding: 5px;
-        color: #ff6b6b;
-      }
-
-      /* Info Row */
+      /* Info Row - Read Only (walay edit button) */
       .info-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px 0;
+        padding: 14px 0;
         border-bottom: 1px solid #f0f0f0;
       }
 
@@ -274,54 +213,23 @@
 
       .info-label {
         color: #666;
-        font-size: 14px;
+        font-size: 15px;
+        font-weight: 500;
       }
 
       .info-value {
         font-weight: 600;
         color: #333;
+        font-size: 15px;
       }
 
       .badge-user {
         background: #27ae60;
         color: white;
-        padding: 4px 12px;
+        padding: 4px 14px;
         border-radius: 20px;
         font-size: 12px;
         display: inline-block;
-      }
-
-      /* Theme Switcher */
-      .theme-options {
-        display: flex;
-        gap: 15px;
-        margin-top: 10px;
-      }
-
-      .theme-option {
-        flex: 1;
-        text-align: center;
-        padding: 15px;
-        border: 2px solid #e0e0e0;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .theme-option:hover {
-        border-color: #ff6b6b;
-        transform: translateY(-2px);
-      }
-
-      .theme-option.active {
-        border-color: #ff6b6b;
-        background: rgba(255, 107, 107, 0.05);
-      }
-
-      .theme-option i {
-        font-size: 30px;
-        margin-bottom: 8px;
-        display: block;
       }
 
       /* Toast Notification */
@@ -352,21 +260,20 @@
 
       /* Responsive */
       @media (max-width: 768px) {
-        .settings-container {
-          grid-template-columns: 1fr;
-        }
         .sidebar {
           width: 200px;
         }
         .main {
           padding: 20px;
         }
-        .stats-bar {
-          flex-wrap: wrap;
-        }
         .profile-avatar {
           flex-direction: column;
           text-align: center;
+        }
+        .info-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
         }
       }
     </style>
@@ -386,7 +293,7 @@
     <div class="main">
       <div class="header">
         <h1>⚙️ Account Settings</h1>
-        <p>Manage your profile, security, and appearance preferences</p>
+        <p>View your profile information</p>
       </div>
 
       <!-- Stats Bar -->
@@ -396,135 +303,52 @@
         <div class="stat-chip" id="sessionTime">🟢 Session Active</div>
       </div>
 
-      <div class="settings-container">
-        <!-- Profile Settings Card -->
-        <div class="settings-card">
-          <div class="card-header">
-            👤
-            <h3>Profile Information</h3>
-            <div class="badge">{{ role|title }}</div>
+      <!-- Profile Information Card - Full Width -->
+      <div class="settings-card">
+        <div class="card-header">
+          👤
+          <h3>Profile Information</h3>
+          <div class="badge">{{ role|title }}</div>
+        </div>
+        
+        <div class="profile-avatar">
+          <div class="avatar-circle" id="avatarInitial">
+            {{ username[0]|upper if username else 'U' }}
           </div>
-          
-          <div class="profile-avatar">
-            <div class="avatar-circle" id="avatarInitial">
-              {{ username[0]|upper if username else 'U' }}
-            </div>
-            <div class="avatar-info">
-              <h4>{{ username }}</h4>
-              <p>{{ role|title }} Account • Member since <span id="memberSinceShort"></span></p>
-              <button class="btn-outline" onclick="changeAvatar()" style="margin-top: 8px;">Change Avatar</button>
-            </div>
-          </div>
-          
-          <div class="info-row">
-            <span class="info-label">Username</span>
-            <span class="info-value" id="displayUsername">{{ username }}</span>
-            <button class="btn-icon" onclick="editUsername()">✏️</button>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Email Address</span>
-            <span class="info-value" id="displayEmail">{{ username }}@example.com</span>
-            <button class="btn-icon" onclick="editEmail()">✏️</button>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Account Type</span>
-            <span class="info-value"><span class="badge-user">{{ role|title }}</span></span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Member Since</span>
-            <span class="info-value" id="memberSince">Loading...</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Last Login</span>
-            <span class="info-value" id="lastLogin">Just now</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Account Status</span>
-            <span class="info-value" style="color: #27ae60;">✓ Active</span>
+          <div class="avatar-info">
+            <h4>{{ username }}</h4>
+            <p>{{ role|title }} Account • Member since <span id="memberSinceShort"></span></p>
+            <button class="btn-outline" onclick="changeAvatar()">🎨 Change Avatar Color</button>
           </div>
         </div>
-
-        <!-- Change Password Card -->
-        <div class="settings-card">
-          <div class="card-header">
-            🔒
-            <h3>Change Password</h3>
-          </div>
-          
-          <form id="changePasswordForm">
-            <div class="form-group">
-              <label>Current Password</label>
-              <input type="password" id="currentPassword" placeholder="Enter current password" required>
-            </div>
-            <div class="form-group">
-              <label>New Password</label>
-              <input type="password" id="newPassword" placeholder="Enter new password" required>
-              <small style="color: #999;">Minimum 8 characters</small>
-            </div>
-            <div class="form-group">
-              <label>Confirm New Password</label>
-              <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
-            </div>
-            <button type="submit" class="btn-primary">🔐 Update Password</button>
-          </form>
+        
+        <div class="info-row">
+          <span class="info-label">👤 Username</span>
+          <span class="info-value" id="displayUsername">{{ username }}</span>
         </div>
-
-        <!-- Appearance Card -->
-        <div class="settings-card">
-          <div class="card-header">
-            🎨
-            <h3>Appearance</h3>
-          </div>
-          
-          <div class="form-group">
-            <label>Theme Preference</label>
-            <div class="theme-options">
-              <div class="theme-option" data-theme="light">
-                ☀️
-                Light
-              </div>
-              <div class="theme-option" data-theme="dark">
-                🌙
-                Dark
-              </div>
-              <div class="theme-option" data-theme="auto">
-                ⚡
-                Auto
-              </div>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label>🌐 Language</label>
-            <select id="languageSelect">
-              <option value="en">English</option>
-              <option value="fil">Filipino</option>
-              <option value="ceb">Cebuano</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label>🔔 Notifications</label>
-            <select id="notificationSelect">
-              <option value="all">All notifications</option>
-              <option value="important">Important only</option>
-              <option value="none">None</option>
-            </select>
-          </div>
-          
-          <button class="btn-primary" onclick="savePreferences()">💾 Save Preferences</button>
+        <div class="info-row">
+          <span class="info-label">📧 Email Address</span>
+          <span class="info-value" id="displayEmail">{{ username }}@bisu.edu.ph</span>
         </div>
-      </div>
-    </div>
-
-    <!-- Modal for Edit -->
-    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; justify-content: center; align-items: center;">
-      <div style="background: white; border-radius: 20px; padding: 25px; width: 350px;">
-        <h3 id="modalTitle">Edit</h3>
-        <input type="text" id="modalInput" style="width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 10px;">
-        <div style="display: flex; gap: 10px;">
-          <button onclick="saveEdit()" class="btn-primary">Save</button>
-          <button onclick="closeModal()" class="btn-secondary">Cancel</button>
+        <div class="info-row">
+          <span class="info-label">👑 Account Type</span>
+          <span class="info-value"><span class="badge-user">{{ role|title }}</span></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">⚡ Access Level</span>
+          <span class="info-value">Standard User</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📅 Member Since</span>
+          <span class="info-value" id="memberSince">Loading...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🕐 Last Login</span>
+          <span class="info-value" id="lastLogin">Just now</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">✅ Account Status</span>
+          <span class="info-value" style="color: #27ae60;">✓ Active</span>
         </div>
       </div>
     </div>
@@ -535,8 +359,6 @@
     </div>
 
     <script>
-      let editCallback = null;
-      
       function showToast(message, type) {
         const toast = document.getElementById('toastNotification');
         const toastMsg = document.getElementById('toastMessage');
@@ -546,121 +368,35 @@
         setTimeout(() => { toast.style.display = 'none'; }, 3000);
       }
       
-      function openModal(title, value, callback) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalInput').value = value;
-        editCallback = callback;
-        document.getElementById('editModal').style.display = 'flex';
-      }
-      
-      function closeModal() {
-        document.getElementById('editModal').style.display = 'none';
-        editCallback = null;
-      }
-      
-      function saveEdit() {
-        if (editCallback) {
-          editCallback(document.getElementById('modalInput').value);
-        }
-        closeModal();
-      }
-      
-      function editUsername() {
-        openModal('Edit Username', document.getElementById('displayUsername').innerText, (newValue) => {
-          if (newValue.trim()) {
-            document.getElementById('displayUsername').innerText = newValue;
-            document.getElementById('avatarInitial').innerHTML = newValue[0].toUpperCase();
-            showToast('Username updated successfully!', 'success');
-          }
-        });
-      }
-      
-      function editEmail() {
-        openModal('Edit Email', document.getElementById('displayEmail').innerText, (newValue) => {
-          if (newValue.trim() && newValue.includes('@')) {
-            document.getElementById('displayEmail').innerText = newValue;
-            showToast('Email updated successfully!', 'success');
-          } else {
-            showToast('Please enter a valid email address', 'error');
-          }
-        });
-      }
-      
       function changeAvatar() {
-        const colors = ['#ff6b6b', '#27ae60', '#e74c3c', '#f39c12', '#3498db'];
+        const colors = ['#ff6b6b', '#27ae60', '#e74c3c', '#f39c12', '#3498db', '#9b59b6', '#1abc9c', '#e67e22'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         document.querySelector('.avatar-circle').style.background = randomColor;
+        localStorage.setItem('userAvatarColor', randomColor);
         showToast('Avatar color changed!', 'success');
       }
       
-      function loadPreferences() {
-        const theme = localStorage.getItem('userTheme') || 'light';
-        const language = localStorage.getItem('userLanguage') || 'en';
-        const notifications = localStorage.getItem('userNotifications') || 'all';
-        
-        document.querySelectorAll('.theme-option').forEach(opt => {
-          opt.classList.remove('active');
-          if (opt.dataset.theme === theme) opt.classList.add('active');
-        });
-        
-        document.getElementById('languageSelect').value = language;
-        document.getElementById('notificationSelect').value = notifications;
-        
-        applyTheme(theme);
-      }
-      
-      function applyTheme(theme) {
-        if (theme === 'dark') {
-          document.body.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e)';
-        } else {
-          document.body.style.background = 'linear-gradient(135deg, #1e2a3a, #0f1724)';
-        }
-      }
-      
-      document.querySelectorAll('.theme-option').forEach(option => {
-        option.addEventListener('click', function() {
-          const theme = this.dataset.theme;
-          localStorage.setItem('userTheme', theme);
-          loadPreferences();
-          showToast('Theme changed to ' + theme + ' mode!', 'success');
-        });
-      });
-      
-      document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const currentPass = document.getElementById('currentPassword').value;
-        const newPass = document.getElementById('newPassword').value;
-        const confirmPass = document.getElementById('confirmPassword').value;
-        
-        if (!currentPass) { showToast('Please enter current password', 'error'); return; }
-        if (newPass !== confirmPass) { showToast('New passwords do not match!', 'error'); return; }
-        if (newPass.length < 8) { showToast('Password must be at least 8 characters!', 'error'); return; }
-        
-        showToast('Password updated successfully!', 'success');
-        document.getElementById('changePasswordForm').reset();
-      });
-      
-      function savePreferences() {
-        const language = document.getElementById('languageSelect').value;
-        const notifications = document.getElementById('notificationSelect').value;
-        
-        localStorage.setItem('userLanguage', language);
-        localStorage.setItem('userNotifications', notifications);
-        
-        showToast('Preferences saved successfully!', 'success');
-      }
-      
       // Set dates
-      const memberDate = new Date().toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' });
+      const memberDate = new Date().toLocaleDateString('en-PH', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
       document.getElementById('memberSince').innerText = memberDate;
       document.getElementById('memberSinceShort').innerText = new Date().getFullYear();
       
-      const lastLogin = localStorage.getItem('lastLogin');
-      if (lastLogin) document.getElementById('lastLogin').innerText = lastLogin;
-      else {
+      // Load saved avatar color from localStorage
+      const savedAvatarColor = localStorage.getItem('userAvatarColor');
+      const lastLogin = localStorage.getItem('userLastLogin');
+      
+      if (savedAvatarColor) {
+        document.querySelector('.avatar-circle').style.background = savedAvatarColor;
+      }
+      
+      if (lastLogin) {
+        document.getElementById('lastLogin').innerText = lastLogin;
+      } else {
         const now = new Date().toLocaleString();
         document.getElementById('lastLogin').innerText = now;
-        localStorage.setItem('lastLogin', now);
+        localStorage.setItem('userLastLogin', now);
       }
       
       function updateSessionTime() {
@@ -668,8 +404,6 @@
       }
       updateSessionTime();
       setInterval(updateSessionTime, 1000);
-      
-      loadPreferences();
     </script>
   </body>
 </html>

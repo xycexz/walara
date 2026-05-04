@@ -324,7 +324,7 @@ class FlaskAppWrapper:
                         role=current_user.get_role()
                     )
             return redirect(url_for('login'))
-
+        
         @self._app.route('/admindashboard/discount-history')
         def discount_history():
             if self._user_manager.get_current_user():
